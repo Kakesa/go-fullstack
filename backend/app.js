@@ -1,20 +1,31 @@
 const  express = require('express'); // Import the express module to create an Express application
 const app = express(); // Create an instance
+
 app.use((req, res, next) => {
-    console.log("Request received"); // Log the HTTP method and URL of the request
-    next(); // Call the next middleware in the stack
-})
-// Middleware to log the request method and URL
-app.use((req, res, next) => {
-    res.status(201); // Set the response status code to 201 (Created)
-    next(); // Call the next middleware in the stack
-})
-app.use((req, res, next) => {
-    res.json({ message: 'Votre requête a été reçue avec succès!' }); // Respond with a JSON message
-    next(); // Call the next middleware in the stack
-})
-// Middleware to handle all requests and respond with a JSON message
-app.use((req, res) => {
-    console.log("Response sent"); // Log that the response has been sent
-})
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  next();
+});
+app.use('/api/stuff', (req, res, next) => {
+  const stuff = [
+    {
+      _id: 'oeihfzeoi',
+      title: 'Mon premier objet',
+      description: 'Les infos de mon premier objet',
+      imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
+      price: 4900,
+      userId: 'qsomihvqios',
+    },
+    {
+      _id: 'oeihfzeomoihi',
+      title: 'Mon deuxième objet',
+      description: 'Les infos de mon deuxième objet',
+      imageUrl: 'https://cdn.pixabay.com/photo/2019/06/11/18/56/camera-4267692_1280.jpg',
+      price: 3900,
+      userId: 'qsomihvqios',
+    },
+  ];
+  res.status(200).json(stuff);
+});
 module.exports = app; // Export the app instance for use in other files
