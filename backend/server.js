@@ -1,11 +1,8 @@
 const http = require('http'); // Import the http module to create an HTTP server
+const app = require('./app'); // Import the Express application instance
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end(`Server running of  http://localhost:${process.env.PORT || 3000}/`);
-});
+app.set('port', process.env.PORT || 3000); // Set the port for the application, defaulting to 3000 if not specified
+// Create an HTTP server using the Express application instance
+const server = http.createServer(app);
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log(`Server running of first at http://localhost:${process.env.PORT || 3000}/`);
-});
+server.listen(process.env.PORT || 3000);
