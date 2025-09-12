@@ -1,19 +1,20 @@
-const express = require('express'); // Import the express module to create an Express application
-const mongoose = require('mongoose'); // Import mongoose for MongoDB interactions
+const express = require('express');
+const mongoose = require('mongoose');
+const stuffRouter = require('./routes/stuff');
+const helmet = require('helmet');
 
-const stuffRouter = require('./routes/stuff'); // Import the stuff routes
-
-// Connect to MongoDB using Mongoose
-mongoose.connect('mongodb+srv://espoirkakesa2:JehovahDieu1@cluster0.9dujdei.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
+// Connexion à MongoDB
+mongoose.connect('mongodb+srv://espoirkakesa2:JehovahDieu1@cluster0.9dujdei.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
   .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  .catch((err) => console.error('Connexion à MongoDB échouée !', err));
 
-const app = express(); // Create an instance
+const app = express();
 
-app.use(express.json()); // Middleware to parse JSON request bodies
-// Middleware to set CORS headers
+// Middleware globaux
+app.use(express.json()); 
+app.use(helmet());
+
+// Middleware CORS
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -21,7 +22,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(bodyParser.json()); // Middleware to parse JSON bodies
-app.use('/api/stuff', stuffRouter); // Use the stuff routes
+// Routes
+app.use('/api/stuff', stuffRouter);
 
-module.exports = app; // Export the app instance for use in other files
+// Middleware de fallback d’erreur
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: 'Une erreur serveur est survenue.' });
+});
+
+module.exports = app;
