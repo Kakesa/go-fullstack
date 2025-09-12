@@ -2,6 +2,8 @@
 //register and login logic
 const bcrypt = require('bcrypt');// Import bcrypt for password hashing
 const User = require('../models/User'); // Import the User model
+
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken for token generation
 exports.signup = (req, res, next) => {
     // Logic for user signup
     bcrypt.hash(req.body.password, 10)
@@ -31,7 +33,11 @@ exports.login = (req, res, next) => {
                     }
                     res.status(200).json({
                         userId: user._id,
-                        token: jwt.sign({ userId: user._id }, 'RANDOM_TOKEN_SECRET', { expiresIn: '24h' })
+                        token: jwt.sign(
+                            { userId: user._id },
+                            'RANDOM_TOKEN_SECRET',
+                            { expiresIn: '24h' }
+                        )
                     });
                 })
                 .catch(error => res.status(500).json({ error }));
