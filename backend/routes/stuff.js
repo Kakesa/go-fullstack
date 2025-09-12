@@ -6,7 +6,7 @@
 
  // Define a simple route for the root path
 router.post('/', staffController.createThing);
-
+// Define a route to get a single thing by its ID
 router.get('/:id', staffController.getOneThing);
 
 // Define a route to update a thing by its ID
