@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const stuffRouter = require('./routes/stuff');
+const userRouter = require('./routes/user');
 const helmet = require('helmet');
 
 // Connexion à MongoDB
@@ -22,13 +23,14 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
-app.use('/api/stuff', stuffRouter);
-
 // Middleware de fallback d’erreur
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ message: 'Une erreur serveur est survenue.' });
 });
+// Routes
+app.use('/api/stuff', stuffRouter);
+app.use('/api/auth', userRouter);
+
 
 module.exports = app;
