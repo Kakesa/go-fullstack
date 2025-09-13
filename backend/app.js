@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const stuffRouter = require('./routes/stuff');
-const userRouter = require('./routes/user');
+const stuffRouters = require('./routes/stuff');
+const userRouters = require('./routes/user');
 const helmet = require('helmet');
 const path = require('path');
 
@@ -30,8 +30,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Une erreur serveur est survenue.' });
 });
 // Routes
-app.use('/api/stuff', stuffRouter);
-app.use('/api/auth', userRouter);
+app.use('/api/stuff', stuffRouters);
+app.use('/api/auth', userRouters);
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 

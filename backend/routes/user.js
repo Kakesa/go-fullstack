@@ -1,4 +1,4 @@
-    const express = require('express'); // Import the express module to create an Express application
+const express = require('express'); // Import the express module to create an Express application
 const router = express.Router(); // Create a router instance
 const userController = require('../controllers/user'); // Import the user controller
 
