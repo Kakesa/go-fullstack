@@ -6,7 +6,8 @@ const helmet = require('helmet');
 const path = require('path');
 
 // Connexion à MongoDB
-mongoose.connect('mongodb+srv://espoirkakesa2:JehovahDieu1@cluster0.9dujdei.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+//mongodb+srv://espoirkakesa2:JehovahDieu1@cluster0.9dujdei.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+mongoose.connect('mongodb://localhost:27017/api_rest', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch((err) => console.error('Connexion à MongoDB échouée !', err));
 
