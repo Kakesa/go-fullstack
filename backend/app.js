@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const stuffRouter = require('./routes/stuff');
 const userRouter = require('./routes/user');
 const helmet = require('helmet');
+const path = require('path');
 
 // Connexion à MongoDB
 mongoose.connect('mongodb+srv://espoirkakesa2:JehovahDieu1@cluster0.9dujdei.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
@@ -31,6 +32,7 @@ app.use((err, req, res, next) => {
 // Routes
 app.use('/api/stuff', stuffRouter);
 app.use('/api/auth', userRouter);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 module.exports = app;
