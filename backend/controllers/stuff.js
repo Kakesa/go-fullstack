@@ -1,6 +1,6 @@
 const Thing = require('../models/Thing'); // Import the Thing model
 
-
+// Middleware for creating a thing
 exports.createThing = (req, res, next) => {
    const thingObject = JSON.parse(req.body.thing);
    delete thingObject._id;
@@ -16,6 +16,7 @@ exports.createThing = (req, res, next) => {
    .catch(error => { res.status(400).json( { error })})
 };
 
+// Middleware for modifying a thing
 exports.modifyThing = (req, res, next) => {
    const thingObject = req.file ? {
        ...JSON.parse(req.body.thing),
@@ -37,18 +38,23 @@ exports.modifyThing = (req, res, next) => {
            res.status(400).json({ error });
        });
 }; 
+
+// Middleware for deleting a thing
 exports.deleteThing = (req, res, next) => {
     Thing.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).json({ message: 'Objet supprimé !' }))
         .catch(error => res.status(400).json({ error }));
 };
 
+// Middleware for getting one thing
 exports.getOneThing =(req, res, next) => {
   Thing.findOne({ _id: req.params.id })
     .then(thing => res.status(200).json(thing))
     .catch(error => res.status(404).json({ error }));
 };
 
+
+// Middleware for getting all things
 exports.getAllThings = (req, res) => {
     Thing.find()
         .then(things => res.status(200).json(things))
